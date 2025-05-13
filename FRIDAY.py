@@ -5,7 +5,7 @@ def proses_input():
     chat_log.insert(tk.END, f"Kamu: {user_input}\n")
     entry.delete(0, tk.END)
 
-    # Logika respon
+    
     if "tambah" in user_input or "kali" in user_input or "kurang" in user_input or "bagi" in user_input:
         try:
             user_input = user_input.replace("tambah", "+")
@@ -30,7 +30,7 @@ def proses_input():
 
     chat_log.insert(tk.END, f"AI: {response}\n")
 
-# Setup GUI
+
 root = tk.Tk()
 root.title("Lintar AI Chat")
 
