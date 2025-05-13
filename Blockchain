@@ -6,7 +6,7 @@ class Block:
     def __init__(self, index, timestamp, transactions, previous_hash, miner):
         self.index = index
         self.timestamp = timestamp
-        self.transactions = transactions  # list of dict
+        self.transactions = transactions
         self.previous_hash = previous_hash
         self.miner = miner
         self.nonce = 0
@@ -41,7 +41,7 @@ class Blockchain:
         self.pending_transactions.append({"from": sender, "to": receiver, "amount": amount})
 
     def mine_pending_transactions(self, miner_name):
-        # Tambah reward ke penambang
+        
         reward_tx = {"from": "Sistem", "to": miner_name, "amount": self.reward}
         transactions = [reward_tx] + self.pending_transactions
         block = Block(len(self.chain), time.time(), transactions, self.get_latest_block().hash, miner_name)
@@ -79,22 +79,22 @@ class Blockchain:
                 return False
         return True
 
-# === SIMULASI ===
+
 
 bc = Blockchain()
 
-# Langsung mining blok oleh: Abim, Reoy, Panji, Ucok, Patih
+
 for miner in ["Abim", "Reoy", "Panji", "Ucok", "Patih"]:
     bc.mine_pending_transactions(miner)
 
-# Tambah transaksi: Lintar kirim ke semuanya
+
 for name in ["Abim", "Reoy", "Panji", "Ucok", "Patih"]:
     bc.create_transaction("Lintar", name, 2)
 
-# Miner Reoy menambang transaksi ini
+
 bc.mine_pending_transactions("Reoy")
 
-# Tampilkan semua blok
+
 print("\n=== RANTAI BLOK ===")
 for block in bc.chain:
     print(f"\nBlock #{block.index} oleh {block.miner}")
@@ -104,17 +104,17 @@ for block in bc.chain:
     for tx in block.transactions:
         print(f"- {tx['from']} kirim {tx['amount']} koin ke {tx['to']}")
 
-# Cek saldo semua pengguna
+
 bc.print_balances()
 
-# Cek apakah blockchain valid
+
 print("\nBlockchain valid:", bc.is_chain_valid())
 
-# === FLASK START ===
+
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-blockchain = bc  # bc = instance dari Blockchain class tadi
+blockchain = bc 
 
 @app.route('/chain', methods=['GET'])
 def get_chain():
